@@ -97,7 +97,7 @@ public class Inventario {
         return false;
     }
 
-    public boolean venderProducto(String nombre, int cantidad) {
+    public boolean venderProducto(String nombre, int cantidad, double pago) {
         Producto p = buscarPorNombre(nombre);
         if (p != null && p.getStock() >= cantidad) {
             p.setStock(p.getStock() - cantidad);
@@ -108,7 +108,7 @@ public class Inventario {
         return false;
     }
 
-    public boolean venderProductoPorId(int id, int cantidad) {
+    public boolean venderProductoPorId(int id, int cantidad, double pago) {
         Producto p = buscarPorId(id);
         if (p != null && p.getStock() >= cantidad) {
             p.setStock(p.getStock() - cantidad);

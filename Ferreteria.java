@@ -79,11 +79,15 @@ public class Ferreteria {
                         System.out.print("Cantidad: ");
                         int cant = sc.nextInt();
 
-                        if (inv.venderProducto(nombreVenta, cant))
-                            System.out.println("Venta realizada.");
-                        else
-                            System.out.println("Error: no existe o stock insuficiente.");
+                        System.out.print("Monto con el que paga: ");
+                        double pago = sc.nextDouble();
+                        sc.nextLine();
 
+                        if (inv.venderProducto(nombreVenta, cant, pago))
+                            System.out.println("Venta realizada, ticket generado.");
+                        else
+                            System.out.println("Error: no existe, stock insuficiente o pago insuficiente.");
+                        break;
                     } else if (tipo == 2) {
                         System.out.print("ID del producto: ");
                         int idVenta = sc.nextInt();
@@ -91,11 +95,15 @@ public class Ferreteria {
                         System.out.print("Cantidad: ");
                         int cant = sc.nextInt();
 
-                        if (inv.venderProductoPorId(idVenta, cant))
-                            System.out.println("Venta realizada.");
-                        else
-                            System.out.println("Error: no existe o stock insuficiente.");
+                        System.out.print("Monto con el que paga: ");
+                        double pago = sc.nextDouble();
+                        sc.nextLine();
 
+                        if (inv.venderProductoPorId(idVenta, cant, pago))
+                            System.out.println("Venta realizada, ticket generado.");
+                        else
+                            System.out.println("Error: no existe, stock insuficiente o pago insuficiente.");
+                        break;
                     } else {
                         System.out.println("Opción inválida.");
                     }
