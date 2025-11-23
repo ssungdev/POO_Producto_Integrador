@@ -102,6 +102,7 @@ public class Inventario {
         if (p != null && p.getStock() >= cantidad) {
             p.setStock(p.getStock() - cantidad);
             guardarArchivo();
+            generarTicket(p, cantidad);
             return true;
         }
         return false;
@@ -112,8 +113,39 @@ public class Inventario {
         if (p != null && p.getStock() >= cantidad) {
             p.setStock(p.getStock() - cantidad);
             guardarArchivo();
+            generarTicket(p, cantidad);
             return true;
         }
         return false;
     }
+
+    // Generar Ticket
+    private void generarTicket(Producto p, int cantidad) {
+        try {
+            String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+            String nombreArchivo = "ticket_" + timestamp + ".txt";
+
+            PrintWriter pw = new PrintWriter(new FileWriter(nombreArchivo));
+
+            pw.println("====== TICKET DE VENTA ======");
+            pw.println("Fecha: " + new java.util.Date());
+            pw.println("");
+            pw.println("Producto vendido:");
+            pw.println("ID: " + p.getId());
+            pw.println("Nombre: " + p.getNombre());
+            pw.println("Precio unitario: $" + p.getPrecio());
+            pw.println("Cantidad: " + cantidad);
+            pw.println("------------------------------");
+            pw.println("TOTAL: $" + (p.getPrecio() * cantidad));
+            pw.println("==============================");
+
+            pw.close();
+
+            System.out.println("Ticket generado: " + nombreArchivo);
+
+        } catch (Exception e) {
+            System.out.println("Error al generar ticket: " + e.getMessage());
+        }
+    }
+
 }
