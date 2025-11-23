@@ -7,9 +7,7 @@ public class Inventario {
 
     ArrayList<Producto> productos = new ArrayList<>();
 
-    // ============================
-    // Cargar archivo al iniciar
-    // ============================
+    // CARGAR ARCHIVO
     public void cargarArchivo() {
         try (BufferedReader br = new BufferedReader(new FileReader("productos.txt"))) {
             String linea;
@@ -28,31 +26,24 @@ public class Inventario {
             System.out.println("Productos cargados desde archivo.");
 
         } catch (FileNotFoundException e) {
-            System.out.println("Archivo no existe, se creará al guardar.");
+            System.out.println("Archivo no encontrado. Se creará uno nuevo.");
         } catch (Exception e) {
             System.out.println("Error al leer archivo: " + e.getMessage());
         }
     }
 
-    // ============================
-    // Guardar archivo
-    // ============================
+    // GUARDAR ARCHIVO
     public void guardarArchivo() {
         try (PrintWriter pw = new PrintWriter(new FileWriter("productos.txt"))) {
-
             for (Producto p : productos) {
                 pw.println(p.getId() + "|" + p.getNombre() + "|" + p.getPrecio() + "|" + p.getStock());
             }
-
         } catch (Exception e) {
-            System.out.println("Error al guardar: " + e.getMessage());
+            System.out.println("Error al guardar archivo: " + e.getMessage());
         }
     }
 
-    // ============================
-    // Operaciones del inventario
-    // ============================
-
+    // OPERACIONES DEL INVENTARIO
     public void agregarProducto(Producto p) {
         productos.add(p);
         guardarArchivo();
@@ -63,7 +54,6 @@ public class Inventario {
             System.out.println("Inventario vacío.");
             return;
         }
-
         for (Producto p : productos) {
             System.out.println(p);
         }
@@ -72,6 +62,15 @@ public class Inventario {
     public Producto buscarPorNombre(String nombre) {
         for (Producto p : productos) {
             if (p.getNombre().equalsIgnoreCase(nombre)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public Producto buscarPorId(int id) {
+        for (Producto p : productos) {
+            if (p.getId() == id) {
                 return p;
             }
         }
@@ -100,6 +99,16 @@ public class Inventario {
 
     public boolean venderProducto(String nombre, int cantidad) {
         Producto p = buscarPorNombre(nombre);
+        if (p != null && p.getStock() >= cantidad) {
+            p.setStock(p.getStock() - cantidad);
+            guardarArchivo();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean venderProductoPorId(int id, int cantidad) {
+        Producto p = buscarPorId(id);
         if (p != null && p.getStock() >= cantidad) {
             p.setStock(p.getStock() - cantidad);
             guardarArchivo();
