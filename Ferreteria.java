@@ -6,10 +6,9 @@ public class Ferreteria {
     public static void main(String[] args) {
 
         Inventario inv = new Inventario();
-        inv.cargarArchivo(); // <--- Carga desde productos.txt
+        inv.cargarArchivo(); // Cargar desde productos.txt
 
         Scanner sc = new Scanner(System.in);
-
         int opcion;
 
         do {
@@ -19,7 +18,7 @@ public class Ferreteria {
             System.out.println("3. Modificar precio");
             System.out.println("4. Eliminar producto");
             System.out.println("5. Vender producto");
-            System.out.println("6. Agregar producto"); // <-- NUEVA OPCIÓN
+            System.out.println("6. Agregar producto");
             System.out.println("7. Salir");
             System.out.print("Opción: ");
             opcion = sc.nextInt();
@@ -66,22 +65,46 @@ public class Ferreteria {
                     break;
 
                 case 5:
-                    System.out.print("Producto a vender: ");
-                    String nombreVenta = sc.nextLine();
+                    System.out.println("Vender por:");
+                    System.out.println("1. Nombre");
+                    System.out.println("2. ID");
+                    System.out.print("Opción: ");
+                    int tipo = sc.nextInt();
+                    sc.nextLine();
 
-                    System.out.print("Cantidad: ");
-                    int cant = sc.nextInt();
+                    if (tipo == 1) {
+                        System.out.print("Producto a vender: ");
+                        String nombreVenta = sc.nextLine();
 
-                    if (inv.venderProducto(nombreVenta, cant))
-                        System.out.println("Venta realizada, ticket generado.");
-                    else
-                        System.out.println("Error: no existe o stock insuficiente.");
+                        System.out.print("Cantidad: ");
+                        int cant = sc.nextInt();
+
+                        if (inv.venderProducto(nombreVenta, cant))
+                            System.out.println("Venta realizada.");
+                        else
+                            System.out.println("Error: no existe o stock insuficiente.");
+
+                    } else if (tipo == 2) {
+                        System.out.print("ID del producto: ");
+                        int idVenta = sc.nextInt();
+
+                        System.out.print("Cantidad: ");
+                        int cant = sc.nextInt();
+
+                        if (inv.venderProductoPorId(idVenta, cant))
+                            System.out.println("Venta realizada.");
+                        else
+                            System.out.println("Error: no existe o stock insuficiente.");
+
+                    } else {
+                        System.out.println("Opción inválida.");
+                    }
                     break;
 
                 case 6:
                     System.out.print("ID: ");
                     int id = sc.nextInt();
-                    sc.nextLine(); // limpiar
+                    sc.nextLine();
 
                     System.out.print("Nombre: ");
                     String nom = sc.nextLine();
